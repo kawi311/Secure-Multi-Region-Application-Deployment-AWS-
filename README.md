@@ -6,33 +6,7 @@ Reusable Terraform modules for a two-region AWS application stack, with regional
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    User((Users)) --> DNS[Route 53 health checks and DNS failover]
-    DNS --> ALBA[Application Load Balancer]
-    DNS --> ALBZ[Application Load Balancer]
-
-    subgraph A["Region A · ap-southeast-1"]
-        ALBA --> WAF_A[WAF]
-        WAF_A --> ASG_A[Auto Scaling Group · private subnets]
-        ASG_A --> RDS_A[(RDS primary)]
-        S3_A[(Versioned S3 bucket)]
-        VPC_A[VPC · public/private subnets · NAT · SSM endpoints]
-        CW_A[CloudWatch alarms and SNS]
-    end
-
-    subgraph Z["Region Z · us-east-1"]
-        ALBZ --> WAF_Z[WAF]
-        WAF_Z --> ASG_Z[Auto Scaling Group · private subnets]
-        ASG_Z --> RDS_Z[(RDS replica)]
-        S3_Z[(S3 replication destination)]
-        VPC_Z[VPC · public/private subnets · NAT · SSM endpoints]
-        CW_Z[CloudWatch alarms and SNS]
-    end
-
-    S3_A -. cross-region replication .-> S3_Z
-    RDS_A -. cross-region backup/replica configuration .-> RDS_Z
-```
+<img width="4288" height="4604" alt="image" src="https://github.com/user-attachments/assets/c1620d53-8712-446c-bab9-40c188738a8e" />
 
 The Terraform is organized as reusable modules plus three root stacks: `region-a`, `region-z`, and `global`. The global stack reads regional outputs from local Terraform state files to configure Route 53, so state placement and deployment order must be planned carefully.
 
