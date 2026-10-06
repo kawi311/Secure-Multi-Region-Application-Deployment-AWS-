@@ -1,0 +1,37 @@
+# Terraform working directories and downloaded providers
+.terraform/
+**/.terraform/*
+
+# Terraform state, plans, and crash logs may contain sensitive values
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+tfplan*
+crash.log
+crash.*.log
+
+# Local inputs and generated key material
+*.tfvars
+*.pem
+*.key
+*.pub
+
+# Local/editor artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Terraform
+.terraform/
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+tfplan
+tfplan*
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+
+# Files rác
+test_s3.txt
